@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>SWAPI</title>
+
+    <style>
+        .card-flip {
+            perspective: 1000px;
+        }
+
+        .card-flip:hover .flip,
+        .card-flip.hover .flip {
+            transform: rotateY(180deg);
+        }
+
+        .card-flip,
+        .front,
+        .back {
+            width: 100%;
+            height: 480px;
+        }
+
+        .flip {
+            transition: 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .front,
+        .back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body style="background-color: rgb(71, 70, 75);">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#" style="color: yellow;">Star Wars</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" style="color: yellow;">Films</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./people.html">People</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./vehicles.html">Vehicles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./starships.html">Starships</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./species.html">Species</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./planets.html">Planets</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-light my-2 my-sm-0" type="submit" style="background-color: yellow;">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row align-items-stretch" id="hello" style="padding-top: 90px;">
+            <!-- Body for index page -->
+        </div>
+    </div>
+    </div>
+
+    <script>
+        async function getFilms() {
+            let url = 'https://swapi.dev/api/films/';
+            let response = await fetch(url);
+            let res = await response.json();
+            let obj = res.results;
+            for (let i = 0; i < Object.keys(obj).length; i++) {
+                let result = res.results[i];
+                document.getElementById('hello').innerHTML += '<div class="col-sm-6 col-lg-3">' +
+                    '<div class="card-flip">' +
+                    '<div class="flip">' +
+                    '<div class="front">' +
+                    '<div class="card" style="background-color: yellow; color: Black;">' +
+                    '<img class="card-img-top" src="https://starwars-visualguide.com/assets/img/films/'+(i+1)+'.jpg" style="height: 180px; width: 100%; display: block;" data-holder-rendered="true">' +
+                    '<div class="card-block" style="padding: 10px 10px;">' +
+                    '<h4 class="card-title">' + result.title + '</h4>' +
+                    '<h6 class="card-text"><b>Released on:</b> ' + result.release_date + '</h6>' +
+                    '<h6 class="card-text"><b>Directed By:</b> ' + result.director + '</h6>' +
+                    '<h6 class="card-text"><b>Produced By:</b> ' + result.producer + '</h6>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="card-footer" style="color: Black;">' +
+                    '<small class="text-muted" style="font-weight: bold; font-size: 1rem;">Star-Wars API {SWAPI}</small>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="back">' +
+                    '<div class="card" style="background-color: yellow; color: Black;">' +
+                    '<div class="card-block" style="padding: 10px 10px;">' +
+                    '<h4 class="card-title" style="padding: 0px 10px;">' + result.title + '</h4>' +
+                    '<h6 class="card-subtitle text-muted">Episodes: ' + result.episode_id + '</h6>' +
+                    '</div>' +
+                    '<div class="card-block" style="padding: 10px 10px;">' +
+                    '<p class="card-text" style="padding: 0px 10px; font-size: 1rem;">' + result.opening_crawl + '</p>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+        }
+        getFilms();
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

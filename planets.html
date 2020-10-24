@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>SWAPI</title>
+</head>
+
+<body style="background-color: rgb(71, 70, 75);">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#" style="color: yellow;">Star Wars</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">Films</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">People</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Vehicles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Starships</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./species.html">Species</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" style="color: yellow;">Planets</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn my-2 my-sm-0" style="background-color: yellow;" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 90px;">
+        <div class="row row-cols-1 row-cols-md-4" id="hello">
+
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+        // Function for fetching and displaying details of Planets
+
+        async function getPlanets() {
+            let url = 'https://swapi.dev/api/planets/';
+            let response = await fetch(url);
+            let res = await response.json();
+            console.log(res.results[0]);
+            let result = res.results;
+            for (let i = 0; i < Object.keys(result).length; i++) {
+                document.getElementById('hello').innerHTML += '<div class="col col-lg-3">' +
+                    '<div class="card" style="background-color: yellow; color: Black;">' +
+                    '<img src="https://starwars-visualguide.com/assets/img/planets/'+(i+2)+'.jpg" class="card-img-top" alt="...">' +
+                    '<div class="card-body">' +
+                    '<h5 class="card-title">Name: ' + result[i].name + '</h5>' +
+                    '<p class="card-text">Rotation Period: ' + result[i].rotation_period + '<br></p>' +
+                    '<p class="card-text">Orbital Period: ' + result[i].orbital_period + '<br></p>' +
+                    '<p class="card-text">Diameter: ' + result[i].diameter + '<br></p>' +
+                    '<p class="card-text">Climate: ' + result[i].climate + '<br></p>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="card-footer" style="color: Black;">' +
+                    '<small class="text-muted" style="font-weight: bold; font-size: 1.1rem;">Star-Wars API {SWAPI}</small>' +
+                    '</div>' +
+                    '</div>';
+            }
+        }
+        getPlanets();
+    </script>
+</body>
+
+</html>
