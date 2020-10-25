@@ -45,9 +45,10 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-light my-2 my-sm-0" type="submit" style="background-color: yellow;">Search</button>
+                <input id="srctxt" class="form-control mr-sm-2" type="search" placeholder="Search">
             </form>
+            <button class="btn btn-light my-2 my-sm-0" style="background-color: yellow;"
+                onclick="showRes()">Search</button>
         </div>
     </nav>
 
@@ -69,7 +70,7 @@
                 let result = res.results[i];
                 document.getElementById('hello').innerHTML += '<div class="col-12 col-lg-3">' +
                     '<div class="card" style="background-color: yellow; color: Black;">' +
-                    '<img src="https://starwars-visualguide.com/assets/img/characters/'+(i+1)+'.jpg" class="card-img-top" alt="...">' +
+                    '<img src="https://starwars-visualguide.com/assets/img/characters/' + (i + 1) + '.jpg" class="card-img-top" alt="...">' +
                     '<div class="card-body">' +
                     '<h4 class="card-title">' + result.name + '</h4>' +
                     '<h6 class="card-text"><b>Height:</b> ' + result.height + '</h6>' +
@@ -99,6 +100,42 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
 
+    <script>
+        function showRes() {
+            let txt = document.getElementById('srctxt').value;
+
+            async function getRes() {
+                let url = 'https://swapi.dev/api/people/?search=' + txt;
+                document.getElementById('hello').innerHTML = '';
+                let response = await fetch(url);
+                let obj = await response.json();
+                let res = obj.results;
+                console.log(res.length);
+                if (res.length == 0) {
+                    document.getElementById('hello').innerHTML = '<div style="color: yellow; font-size: large; margin-left: auto; margin-right: auto; width: rem">Oops! Looks like no result matches your query</div>'
+                }
+                for (let i = 0; i < res.length; i++) {
+                    let result = res[i];
+                    document.getElementById('hello').innerHTML += '<div class="col-12 col-lg-3">' +
+                        '<div class="card" style="background-color: yellow; color: Black;">' +
+                        '<img src="https://starwars-visualguide.com/assets/img/characters/' + (i + 1) + '.jpg" class="card-img-top" alt="...">' +
+                        '<div class="card-body">' +
+                        '<h4 class="card-title">' + result.name + '</h4>' +
+                        '<h6 class="card-text"><b>Height:</b> ' + result.height + '</h6>' +
+                        '<h6 class="card-text"><b>Mass:</b> ' + result.mass + '</h6>' +
+                        '<h6 class="card-text"><b>Hair:</b> ' + result.hair_color + '</h6>' +
+                        '<h6 class="card-text"><b>Eye:</b> ' + result.eye_color + '</h6>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="card-footer" style="color: Black;">' +
+                        '<small class="text-muted" style="font-weight: bold; font-size: 1.1rem;">Star-Wars API {SWAPI}</small>' +
+                        '</div>' +
+                        '</div>';
+                }
+            }
+            getRes();
+        }
+    </script>
 </body>
 
 </html>
