@@ -12,46 +12,6 @@
 
     <title>SWAPI</title>
 
-    <style>
-        .card-flip {
-            perspective: 1000px;
-        }
-
-        .card-flip:hover .flip,
-        .card-flip.hover .flip {
-            transform: rotateY(180deg);
-        }
-
-        .card-flip,
-        .front,
-        .back {
-            width: 100%;
-            height: 480px;
-        }
-
-        .flip {
-            transition: 0.6s;
-            transform-style: preserve-3d;
-            position: relative;
-        }
-
-        .front,
-        .back {
-            backface-visibility: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .front {
-            z-index: 2;
-            transform: rotateY(0deg);
-        }
-
-        .back {
-            transform: rotateY(180deg);
-        }
-    </style>
 </head>
 
 <body style="background-color: rgb(71, 70, 75);">
@@ -107,7 +67,7 @@
             // console.log(obj)
             for (let i = 0; i < Object.keys(obj).length; i++) {
                 let result = res.results[i];
-                document.getElementById('hello').innerHTML += '<div class="col col-lg-3">' +
+                document.getElementById('hello').innerHTML += '<div class="col-12 col-lg-3">' +
                     '<div class="card" style="background-color: yellow; color: Black;">' +
                     '<img src="https://starwars-visualguide.com/assets/img/characters/'+(i+1)+'.jpg" class="card-img-top" alt="...">' +
                     '<div class="card-body">' +
