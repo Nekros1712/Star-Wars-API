@@ -44,9 +44,9 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn my-2 my-sm-0" style="background-color: yellow;" type="submit">Search</button>
+                <input id="srctxt" class="form-control mr-sm-2" type="search" placeholder="Search">
             </form>
+            <button class="btn my-2 my-sm-0" style="background-color: yellow;" onclick="showRes()">Search</button>
         </div>
     </nav>
 
@@ -98,6 +98,42 @@
         }
         getPlanets();
     </script>
+
+<script>
+    function showRes() {
+        let txt = document.getElementById('srctxt').value;
+        async function getRes() {
+            let url = 'https://swapi.dev/api/planets/?search=' + txt;
+            document.getElementById('hello').innerHTML = '';
+            let response = await fetch(url);
+            let obj = await response.json();
+            let res = obj.results;
+            console.log(res.length);
+            if (res.length == 0) {
+                document.getElementById('hello').innerHTML = '<div style="color: yellow; font-size: large; margin-left: auto; margin-right: auto; width: rem">Oops! Looks like no result matches your query</div>'
+            }
+            for (let i = 0; i < res.length; i++) {
+                let result = res[i];
+                document.getElementById('hello').innerHTML += '<div class="col col-lg-3">' +
+                    '<div class="card" style="background-color: yellow; color: Black;">' +
+                    '<img src="https://starwars-visualguide.com/assets/img/planets/'+(i+2)+'.jpg" class="card-img-top" alt="...">' +
+                    '<div class="card-body">' +
+                    '<h5 class="card-title">Name: ' + result.name + '</h5>' +
+                    '<p class="card-text">Rotation Period: ' + result.rotation_period + '<br></p>' +
+                    '<p class="card-text">Orbital Period: ' + result.orbital_period + '<br></p>' +
+                    '<p class="card-text">Diameter: ' + result.diameter + '<br></p>' +
+                    '<p class="card-text">Climate: ' + result.climate + '<br></p>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="card-footer" style="color: Black;">' +
+                    '<small class="text-muted" style="font-weight: bold; font-size: 1.1rem;">Star-Wars API {SWAPI}</small>' +
+                    '</div>' +
+                    '</div>';
+            }
+        }
+        getRes();
+    }
+</script>
 </body>
 
 </html>

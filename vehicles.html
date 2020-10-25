@@ -85,9 +85,10 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-light my-2 my-sm-0" type="submit" style="background-color: yellow;">Search</button>
+                <input id="srctxt" class="form-control mr-sm-2" type="search" placeholder="Search">
             </form>
+            <button class="btn btn-light my-2 my-sm-0" style="background-color: yellow;"
+                onclick="showRes()">Search</button>
         </div>
     </nav>
 
@@ -111,7 +112,7 @@
                 // console.log(result)
                 document.getElementById('hello').innerHTML += '<div class="col col-lg-3">' +
                     '<div class="card" style="background-color: yellow; color: Black;">' +
-                    '<img src="https://starwars-visualguide.com/assets/img/vehicles/'+(list[i])+'.jpg" class="card-img-top" alt="...">' +
+                    '<img src="https://starwars-visualguide.com/assets/img/vehicles/' + (list[i]) + '.jpg" class="card-img-top" alt="...">' +
                     '<div class="card-body">' +
                     '<h4 class="card-title">' + result.name + '</h4>' +
                     '<h6 class="card-text"><b>Model:</b> ' + result.model + '</h6>' +
@@ -141,6 +142,44 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+
+    <script>
+        function showRes() {
+            let txt = document.getElementById('srctxt').value;
+            var list = [4, 6, 7, 8, 14, 16, 18, 19, 20, 24];
+            async function getRes() {
+                let url = 'https://swapi.dev/api/vehicles/?search=' + txt;
+                document.getElementById('hello').innerHTML = '';
+                let response = await fetch(url);
+                let obj = await response.json();
+                let res = obj.results;
+                console.log(res.length);
+                if (res.length == 0) {
+                    document.getElementById('hello').innerHTML = '<div style="color: yellow; font-size: large; margin-left: auto; margin-right: auto; width: rem">Oops! Looks like no result matches your query</div>'
+                }
+                for (let i = 0; i < res.length; i++) {
+                    let result = res[i];
+                    document.getElementById('hello').innerHTML += '<div class="col col-lg-3">' +
+                        '<div class="card" style="background-color: yellow; color: Black;">' +
+                        '<img src="https://starwars-visualguide.com/assets/img/vehicles/' + (list[i]) + '.jpg" class="card-img-top" alt="...">' +
+                        '<div class="card-body">' +
+                        '<h4 class="card-title">' + result.name + '</h4>' +
+                        '<h6 class="card-text"><b>Model:</b> ' + result.model + '</h6>' +
+                        '<h6 class="card-text"><b>Cost:</b> ' + result.cost_in_credits + '</h6>' +
+                        '<h6 class="card-text"><b>Cargo Capacity:</b> ' + result.cargo_capacity + '</h6>' +
+                        '<h6 class="card-text"><b>Rating:</b> ' + result.hyperdrive_rating + '</h6>' +
+                        '<h6 class="card-text"><b>Manufacturer:</b> ' + result.manufacturer + '</h6>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="card-footer" style="color: Black;">' +
+                        '<small class="text-muted" style="font-weight: bold; font-size: 1.1rem;">Star-Wars API {SWAPI}</small>' +
+                        '</div>' +
+                        '</div>';
+                }
+            }
+            getRes();
+        }
+    </script>
 
 </body>
 

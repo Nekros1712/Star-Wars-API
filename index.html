@@ -85,9 +85,9 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-light my-2 my-sm-0" type="submit" style="background-color: yellow;">Search</button>
+                <input id="srctxt" class="form-control mr-sm-2" type="search" placeholder="Search">
             </form>
+            <button class="btn btn-light my-sm-0" style="background-color: yellow;" onclick="showRes()">Search</button>
         </div>
     </nav>
 
@@ -111,7 +111,7 @@
                     '<div class="flip">' +
                     '<div class="front">' +
                     '<div class="card" style="background-color: yellow; color: Black;">' +
-                    '<img class="card-img-top" src="https://starwars-visualguide.com/assets/img/films/'+(i+1)+'.jpg" style="height: 180px; width: 100%; display: block;" data-holder-rendered="true">' +
+                    '<img class="card-img-top" src="https://starwars-visualguide.com/assets/img/films/' + (i + 1) + '.jpg" style="height: 180px; width: 100%; display: block;" data-holder-rendered="true">' +
                     '<div class="card-block" style="padding: 10px 10px;">' +
                     '<h4 class="card-title">' + result.title + '</h4>' +
                     '<h6 class="card-text"><b>Released on:</b> ' + result.release_date + '</h6>' +
@@ -153,6 +153,59 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+
+    <script>
+        function showRes() {
+            let txt = document.getElementById('srctxt').value;
+
+            async function getRes() {
+                let url = 'https://swapi.dev/api/films/?search=' + txt;
+                document.getElementById('hello').innerHTML = '';
+                let response = await fetch(url);
+                let obj = await response.json();
+                let res = obj.results;
+                console.log(res.length);
+                if (res.length == 0) {
+                    document.getElementById('hello').innerHTML = '<div style="color: yellow; font-size: large; margin-left: auto; margin-right: auto; width: rem">Oops! Looks like no result matches your query</div>'
+                }
+                for (let i = 0; i < res.length; i++) {
+                    let result = res[i];
+                    document.getElementById('hello').innerHTML += '<div class="col-sm-6 col-lg-3">' +
+                        '<div class="card-flip">' +
+                        '<div class="flip">' +
+                        '<div class="front">' +
+                        '<div class="card" style="background-color: yellow; color: Black;">' +
+                        '<img class="card-img-top" src="https://starwars-visualguide.com/assets/img/films/' + (i + 1) + '.jpg" style="height: 180px; width: 100%; display: block;" data-holder-rendered="true">' +
+                        '<div class="card-block" style="padding: 10px 10px;">' +
+                        '<h4 class="card-title">' + result.title + '</h4>' +
+                        '<h6 class="card-text"><b>Released on:</b> ' + result.release_date + '</h6>' +
+                        '<h6 class="card-text"><b>Directed By:</b> ' + result.director + '</h6>' +
+                        '<h6 class="card-text"><b>Produced By:</b> ' + result.producer + '</h6>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="card-footer" style="color: Black;">' +
+                        '<small class="text-muted" style="font-weight: bold; font-size: 1rem;">Star-Wars API {SWAPI}</small>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="back">' +
+                        '<div class="card" style="background-color: yellow; color: Black;">' +
+                        '<div class="card-block" style="padding: 10px 10px;">' +
+                        '<h4 class="card-title" style="padding: 0px 10px;">' + result.title + '</h4>' +
+                        '<h6 class="card-subtitle text-muted">Episodes: ' + result.episode_id + '</h6>' +
+                        '</div>' +
+                        '<div class="card-block" style="padding: 10px 10px;">' +
+                        '<p class="card-text" style="padding: 0px 10px; font-size: 1rem;">' + result.opening_crawl + '</p>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+            }
+            getRes();
+        }
+    </script>
 
 </body>
 
